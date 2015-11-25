@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	private Hand rightHand;
-
+	
 	// Use this for initialization
 	void Start () {
 		rightHand = this.GetComponentsInChildren<Hand> ()[0];

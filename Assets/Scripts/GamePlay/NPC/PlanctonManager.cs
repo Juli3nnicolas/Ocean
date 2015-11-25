@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PlanctonManager : MonoBehaviour {
 
-
-	public GameObject rightHand;
 	public const int influenceZone = 10;
 	// Use this for initialization
 	void Start () {
@@ -28,4 +26,6 @@ public class PlanctonManager : MonoBehaviour {
 			transform.position = transform.position + InputManager.Instance.GetRightHandMovement ()*(influenceZone-distance);
 		}
 	}
+	
+	private GameObject rightHand;
 }

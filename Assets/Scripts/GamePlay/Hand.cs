@@ -28,6 +28,7 @@ public class Hand : MonoBehaviour {
 			{
 				this.transform.parent.GetComponent<Rigidbody>().AddForce(Vector3.up*50);
 				Destroy(other.gameObject);
+				transform.parent.gameObject.GetComponent<App.Gameplay.MovePlayer>().init(); //! Must be moved somewhere else
 			}
 		}
 	}
