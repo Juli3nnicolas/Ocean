@@ -18,6 +18,9 @@ namespace Core
 			
 			// End object execution
 			void terminate();
+			
+			// Checking execution state
+			bool isPlaying();
 		}
 	}
 }
