@@ -10,7 +10,8 @@ namespace App
 			public GameObject p_Camera;
 		
 			// Use this for initialization
-			void Start () {
+			void Start () 
+			{
 				Renderer class_renderer = GetComponent<Renderer>();
 				
 				// Init player's position
@@ -27,7 +28,8 @@ namespace App
 			}
 			
 			// Update is called once per frame
-			void Update () {
+			void Update () 
+			{
 			
 			}
 		}
