@@ -28,14 +28,7 @@ public class PlanctonManager : MonoBehaviour {
 		float distance = Vector3.Distance (this.transform.position, rightHand.transform.position );
 		if ( distance < influenceZone)
 		{
-			Vector3 movement=Vector3.zero;
-			Vector3 handMovement = InputManager.Instance.GetRightHandMovement ();
-			disturbance += handMovement.x+handMovement.y+handMovement.z;
-
-			movement.x= handMovement.y*Mathf.Pow((influenceZone-distance),2)*(Mathf.Exp(-Mathf.Pow((disturbance-4)/3, 2)))*Random.Range(0.2f, 8.0f);
-			
-			movement.z= handMovement.z*Mathf.Pow((influenceZone-distance),2)*(Mathf.Exp(-Mathf.Pow((disturbance-4)/3, 2)))*Random.Range(0.2f, 8.0f);
-			transform.Translate(movement);
+			transform.Translate(ComputeMoves(distance));
 			if(InputManager.Instance.HasMovementChanged())
 			{
 				foreach(IndividualPlancton p in this.GetComponentsInChildren<IndividualPlancton>())
@@ -51,6 +44,18 @@ public class PlanctonManager : MonoBehaviour {
 		{
 			p.ChangeColor(newColor);
 		}
+	}
+	Vector3 ComputeMoves(float distance)
+	{
+		Vector3 movement=Vector3.zero;
+		Vector3 handMovement = InputManager.Instance.GetRightHandMovement ();
+		disturbance += handMovement.x+handMovement.y+handMovement.z;
+		movement.x= handMovement.y*Mathf.Pow((influenceZone-distance),2)*(Mathf.Exp(-Mathf.Pow((disturbance-4)/3, 2)))*Random.Range(0.2f, 8.0f);
+		
+		movement.z= handMovement.z*Mathf.Pow((influenceZone-distance),2)*(Mathf.Exp(-Mathf.Pow((disturbance-4)/3, 2)))*Random.Range(0.2f, 8.0f);
+
+		return movement;
+
 	}
 
 }
