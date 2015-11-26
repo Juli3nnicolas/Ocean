@@ -21,6 +21,6 @@ public class Player : MonoBehaviour {
 
 	void Move ()
 	{
-		rightHand.SetPosition (InputManager.Instance.GetRightHandPosition ());
+		rightHand.SetMove (InputManager.Instance.GetRightHandMovement ());
 	}
 }

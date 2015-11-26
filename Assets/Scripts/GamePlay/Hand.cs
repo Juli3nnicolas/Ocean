@@ -20,13 +20,17 @@ public class Hand : MonoBehaviour {
 		this.transform.localPosition = newPosition;
 	}
 
+	public void SetMove (Vector3 move)
+	{
+		this.transform.Translate (move, Space.World);
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "removable")
 		{
 			if(other.name == "FirstLight")
 			{
-				this.transform.parent.GetComponent<Rigidbody>().AddForce(Vector3.up*50);
 				Destroy(other.gameObject);
 				transform.parent.gameObject.GetComponent<App.Gameplay.MovePlayer>().init(); //! Must be moved somewhere else
 			}
