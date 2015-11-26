@@ -2,10 +2,15 @@
 using System.Collections;
 
 public class Scene1 : MonoBehaviour {
-	
+
+
+	private GameObject player;
 	
 	// Use this for initialization
 	void Start () {
+
+		player= GameObject.Find ("Player");
+		Hand.OnStart += StartPlayerMovement;
 
 	}
 	
@@ -13,4 +18,11 @@ public class Scene1 : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	void StartPlayerMovement()
+	{
+		player.GetComponent<App.Gameplay.MovePlayer> ().init ();
+	}
+
+
 }
