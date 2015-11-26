@@ -35,7 +35,7 @@ public class Hand : MonoBehaviour {
 			if(other.name == "FirstLight")
 			{
 				Destroy(other.gameObject);
-				OnStart();
+				OnStart();//Start scene 1
 				//transform.parent.gameObject.GetComponent<App.Gameplay.MovePlayer>().init(); //! Must be moved somewhere else
 			}
 		}

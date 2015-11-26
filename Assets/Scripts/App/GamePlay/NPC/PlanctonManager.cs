@@ -15,7 +15,6 @@ public class PlanctonManager : MonoBehaviour {
 		InputManager.OnMove += Move;
 		rightHand = GameObject.Find ("RightHand");
 		disturbance = 0.0f;
-	
 	}
 	
 	// Update is called once per frame
@@ -44,6 +43,13 @@ public class PlanctonManager : MonoBehaviour {
 					p.Move();
 				}
 			}
+		}
+	}
+	public void ChangeColor(Color newColor)
+	{
+		foreach(IndividualPlancton p in this.GetComponentsInChildren<IndividualPlancton>())
+		{
+			p.ChangeColor(newColor);
 		}
 	}
 

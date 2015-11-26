@@ -10,15 +10,28 @@ public class Scene1 : MonoBehaviour {
 	void Start () {
 
 		player= GameObject.Find ("Player");
-		Hand.OnStart += StartPlayerMovement;
+		Hand.OnStart += Init;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (player.transform.position.y > 100)
+			Application.Quit ();
 		
 	}
 
+	void Init()
+	{
+		StartMusic ();
+		StartPlayerMovement ();
+	}
+
+	void StartMusic()
+	{
+
+	}
 	void StartPlayerMovement()
 	{
 		player.GetComponent<App.Gameplay.MovePlayer> ().init ();

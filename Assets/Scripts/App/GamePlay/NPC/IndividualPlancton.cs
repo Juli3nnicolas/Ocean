@@ -9,6 +9,7 @@ public class IndividualPlancton : MonoBehaviour {
 	
 		movementSize = Random.Range (1.0f, 3.0f);
 		//Values to change when real Input
+
 	}
 
 	public void Move ()
@@ -21,5 +22,10 @@ public class IndividualPlancton : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void ChangeColor(Color newColor )
+	{
+		this.GetComponent<Light> ().color = newColor;
 	}
 }

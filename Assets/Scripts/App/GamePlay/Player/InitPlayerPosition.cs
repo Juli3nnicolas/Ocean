@@ -8,6 +8,7 @@ namespace App
 		public class InitPlayerPosition : MonoBehaviour {
 		
 			public GameObject p_Camera;
+			public GameObject p_RightHand;
 		
 			// Use this for initialization
 			void Start () 
@@ -25,6 +26,8 @@ namespace App
 				
 				// Init Camera rotation
 				p_Camera.transform.Rotate( new Vector3(-90.0f, 0.0f, 0.0f) );
+
+				p_RightHand.transform.position = new Vector3 (0.0f, class_renderer.bounds.size.y / 2.0f + 1, 0.0f);
 			}
 			
 			// Update is called once per frame

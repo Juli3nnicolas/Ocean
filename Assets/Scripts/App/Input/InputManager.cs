@@ -47,13 +47,13 @@ public class InputManager : MonoBehaviour {
 			movementChange = false;
 		}
 
+		//Limit Hand moves
 		if (Mathf.Abs (rightHandPosition.x + rightMovement.x) > 3)
 			rightMovement.x = 0;
 		if (Mathf.Abs (rightHandPosition.y + rightMovement.y) > 2)
 			rightMovement.y = 0;
 		if (Mathf.Abs (rightHandPosition.z + rightMovement.z) > 2)
 			rightMovement.z = 0;
-		Debug.Log (Mathf.Abs (rightHandPosition.y + rightMovement.y));
 
 
 		rightHandMovement = rightMovement;
