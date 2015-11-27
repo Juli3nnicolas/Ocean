@@ -9,11 +9,14 @@ namespace App
 
 		public class MovePlayer : MonoBehaviour, Playable 
 		{
+			public float p_InitialSpeed; // Expressed in meter/second
+			
 			/////////// P L A Y A B L E   I N T E R F A C E ///////////
 			
 			// Start off object execution
 			public void init()
 			{
+				m_verticalSpeed = p_InitialSpeed;
 				play();
 			}
 			
@@ -66,7 +69,7 @@ namespace App
 			
 			/////////// C L A S S   A T T R I B U T E S ///////////
 			
-			private float m_verticalSpeed = 1.0f;
+			private float m_verticalSpeed; // In meter/second
 			private bool  m_isPLaying     = false;
 		}
 	}

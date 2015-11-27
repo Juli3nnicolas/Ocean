@@ -36,7 +36,7 @@ public class PlanctonManager : MonoBehaviour {
 					p.Move();
 				}
 			}
-			ChangeColor(new Color((1- this.disturbance/10.0f), disturbance/10.0f , Mathf.Log(disturbance)));
+			ChangeColor(new Color((1- this.disturbance/5.0f), disturbance/5.0f , Mathf.Log(disturbance)));
 		}
 	}
 	public void ChangeColor(Color newColor)
