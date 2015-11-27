@@ -56,7 +56,7 @@ namespace App
 						// M A N A G E   F O R W A R D - B A C K W A R D   R O T A T I O N S
 						
 						// Rotate forward
-						setAngleIfLower(ref m_angle.x, 25.0f, mouse_v, deltaTime);
+						setAngleIfLower(ref m_angle.x, 30.0f, mouse_v, deltaTime);
 						
 						// Rotate backward
 						setAngleIfGreater(ref m_angle.x, -20.0f, mouse_v, deltaTime);
