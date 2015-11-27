@@ -24,7 +24,6 @@ namespace App
 					rotateCamera(dt);
 				}
 				
-				// Do not change the rotation order
 				private void rotateCamera(float deltaTime)
 				{
 					float mouse_h = Input.GetAxis("Mouse X");
@@ -32,106 +31,63 @@ namespace App
 					
 					// Request to rotate the camera?
 					if ( mouse_h != 0 || mouse_v != 0)
-					{
-						Vector2 new_angle = new Vector2(m_angle.x + mouse_v*m_angularSpeed.x*deltaTime, m_angle.y + mouse_h*m_angularSpeed.y*deltaTime);
-					
-						// Manage side rotations
-					
+					{	
+						// M A N A G E   S I D E   R O T A T I O N S
+						
 						// Position reorientation to prevent unexpected rotations
 						p_Camera.transform.rotation = m_initialOrientation;
 						
-						// Rotate to the left
-						if ( new_angle.y > -90.0f && mouse_h < 0 ) // The rotation angle won't exceed the threshold value
-							m_angle.y = new_angle.y;
-						else
-						{
-							// The complete rotation can't be performed because the angle is greater than the max accepted value
-							// However, if this test is true then part of the rotation can be done to reach the max value.
-							if ( m_angle.y > -90.0f && mouse_h < 0 )
-								m_angle.y = -90.0f;
-						}
-						
 						// Rotate to the right
-						if ( new_angle.y < 90.0f && mouse_h > 0 ) // The rotation angle won't exceed the threshold value
-							m_angle.y = new_angle.y;
-						else
-						{
-							// The complete rotation can't be performed because the angle is greater than the max accepted value
-							// However, if this test is true then part of the rotation can be done to reach the max value.
-							if ( m_angle.y < 90.0f && mouse_h > 0 )
-								m_angle.y = 90.0f;
-						}
+						setAngleIfLower(ref m_angle.y, 90.0f, mouse_h, deltaTime);
+						
+						// Rotate to the left
+						setAngleIfGreater(ref m_angle.y, -90.0f, mouse_h, deltaTime);
 						
 						// Apply the rotation
 						p_Camera.transform.RotateAround(p_Camera.transform.position, m_forwardAxis, m_angle.y);
 						
 						
+						// M A N A G E   F O R W AR D - B A C K W A R D   R O T A T I O N S
 						
-						// Manage forward-backward rotations
-							
 						// Rotate forward
-						if ( new_angle.x < 25.0f && mouse_v > 0 )
-							m_angle.x = new_angle.x;
-						else
-						{
-							if ( m_angle.x < 25.0f && mouse_v > 0 )
-								m_angle.x = 25.0f;
-						}
+						setAngleIfLower(ref m_angle.x, 25.0f, mouse_v, deltaTime);
 						
 						// Rotate backward
-						if ( new_angle.x > -20.0f && mouse_v < 0 )
-							m_angle.x = new_angle.x;
-						else
-						{
-							if ( m_angle.x > -20.0f && mouse_v < 0 )
-								m_angle.x = -20.0f;
-						}
+						setAngleIfGreater(ref m_angle.x, -20.0f, mouse_v, deltaTime);
 						
 						// Orient the camera whether it moved or not
 						p_Camera.transform.RotateAround(p_Camera.transform.position, m_sideAxis, m_angle.x);
 					}
 				}
 				
-				// Rotate from side to side
-				private void makeSideRotations(float deltaTime)
+				private void setAngleIfLower(ref float angle, float threshold, float sensitivity, float deltaTime)
 				{
-					float mouse_h = Input.GetAxis("Mouse X");
-					float mouse_v = Input.GetAxis("Mouse Y");
+					float new_angle = angle + sensitivity*m_angularSpeed.x*deltaTime;
 					
-					
-					// Position reorientation to prevent unexpected rotations
-					p_Camera.transform.rotation = m_initialOrientation;
-					
-					// Rotate to the left
-					if ( m_angle.y > -90.0f && mouse_h < 0 )
-						m_angle.y = m_angle.y + mouse_h*m_angularSpeed.y*deltaTime;
-					
-					// Rotate to the right
-					if ( m_angle.y < 90.0f && mouse_h > 0 )
-						m_angle.y = m_angle.y + mouse_h*m_angularSpeed.y*deltaTime;
-					
-					// Apply the rotation
-					p_Camera.transform.RotateAround(p_Camera.transform.position, m_forwardAxis, m_angle.y);
-					
+					if ( new_angle < threshold && sensitivity > 0 ) // The rotation angle won't exceed the threshold value
+						angle = new_angle;
+					else
+					{
+						// The complete rotation can't be performed because the angle is greater than the max accepted value
+						// However, if this test is true then part of the rotation can be done to reach the max value.
+						if ( angle < threshold && sensitivity > 0 )
+							angle = threshold;
+					}
 				}
 				
-				// Rotate backward and forward
-				// Watch out! This method relies on makeSideRotations
-				// and expects it to be called before
-				private void makeForwardRotations(float deltaTime)
+				private void setAngleIfGreater(ref float angle, float threshold, float sensitivity, float deltaTime)
 				{
-					float mouse_v = Input.GetAxis("Mouse Y");
-						
-					// Rotate forward
-					if ( m_angle.x < 45.0f && mouse_v > 0 )
-						m_angle.x = m_angle.x + mouse_v*m_angularSpeed.x*deltaTime;
+					float new_angle = angle + sensitivity*m_angularSpeed.x*deltaTime;
 					
-					// Rotate backward
-					if ( m_angle.x > -20.0f && mouse_v < 0 )
-						m_angle.x = m_angle.x + mouse_v*m_angularSpeed.x*deltaTime;
-					
-					// Orient the camera whether it moved or not
-					p_Camera.transform.RotateAround(p_Camera.transform.position, m_sideAxis, m_angle.x);
+					if ( new_angle > threshold && sensitivity < 0 ) // The rotation angle won't exceed the threshold value
+						angle = new_angle;
+					else
+					{
+						// The complete rotation can't be performed because the angle is greater than the max accepted value
+						// However, if this test is true then part of the rotation can be done to reach the max value.
+						if ( angle > threshold && sensitivity < 0 )
+							angle = threshold;
+					}
 				}
 				
 				////////////// Attributes //////////////
