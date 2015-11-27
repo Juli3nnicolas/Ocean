@@ -7,27 +7,33 @@ namespace App
 	{
 		namespace Controllers
 		{ 
-			public class EyeCameraController : MonoBehaviour 
+			public abstract class EyeCameraController : MonoBehaviour 
 			{
 				public GameObject p_Camera;
-			
-				// Use this for initialization
-				void Start () 
+				
+				// Called instead of MonoBehaviour::Init since this class is abstract
+				protected virtual void init()
 				{
 					m_initialOrientation = GetComponent<App.Gameplay.InitPlayerPosition>().getInitialOrientation();
 				}
 				
-				// Update is called once per frame
-				void Update () 
+				// Called instead of MonoBehaviour::Update since this class is abstract
+				protected virtual void update()
 				{
 					float dt = Time.deltaTime;
 					rotateCamera(dt);
 				}
 				
+				// Should we normalize the output value between -1.0f and 1.0f. Seems like a good idea.
+				// In that case, rename the method as getMotionRatio.
+				protected abstract Vector2 getMotion();
+				
 				private void rotateCamera(float deltaTime)
 				{
-					float mouse_h = Input.GetAxis("Mouse X");
-					float mouse_v = Input.GetAxis("Mouse Y");
+					Vector2 motion = getMotion();
+					
+					float mouse_h = motion.x; 
+					float mouse_v = motion.y; 
 					
 					// Request to rotate the camera?
 					if ( mouse_h != 0 || mouse_v != 0)
@@ -47,7 +53,7 @@ namespace App
 						p_Camera.transform.RotateAround(p_Camera.transform.position, m_forwardAxis, m_angle.y);
 						
 						
-						// M A N A G E   F O R W AR D - B A C K W A R D   R O T A T I O N S
+						// M A N A G E   F O R W A R D - B A C K W A R D   R O T A T I O N S
 						
 						// Rotate forward
 						setAngleIfLower(ref m_angle.x, 25.0f, mouse_v, deltaTime);
@@ -55,7 +61,7 @@ namespace App
 						// Rotate backward
 						setAngleIfGreater(ref m_angle.x, -20.0f, mouse_v, deltaTime);
 						
-						// Orient the camera whether it moved or not
+						// Orient the camera
 						p_Camera.transform.RotateAround(p_Camera.transform.position, m_sideAxis, m_angle.x);
 					}
 				}
