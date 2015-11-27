@@ -30,8 +30,9 @@ public class Scene1 : MonoBehaviour {
 
 	void StartMusic()
 	{
-
+		GetComponent<AudioSource>().Play();
 	}
+	
 	void StartPlayerMovement()
 	{
 		player.GetComponent<App.Gameplay.MovePlayer> ().init ();
