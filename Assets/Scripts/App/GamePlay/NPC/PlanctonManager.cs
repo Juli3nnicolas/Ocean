@@ -36,6 +36,7 @@ public class PlanctonManager : MonoBehaviour {
 					p.Move();
 				}
 			}
+			ChangeColor(new Color((1- this.disturbance/10.0f), disturbance/10.0f , Mathf.Log(disturbance)));
 		}
 	}
 	public void ChangeColor(Color newColor)
@@ -49,7 +50,8 @@ public class PlanctonManager : MonoBehaviour {
 	{
 		Vector3 movement=Vector3.zero;
 		Vector3 handMovement = InputManager.Instance.GetRightHandMovement ();
-		disturbance += handMovement.x+handMovement.y+handMovement.z;
+		if(disturbance<10-(Mathf.Abs(handMovement.x+handMovement.y+handMovement.z))*2)
+			disturbance += Mathf.Abs(handMovement.x+handMovement.y+handMovement.z)*2;
 		movement.x= handMovement.y*Mathf.Pow((influenceZone-distance),2)*(Mathf.Exp(-Mathf.Pow((disturbance-4)/3, 2)))*Random.Range(0.2f, 8.0f);
 		
 		movement.z= handMovement.z*Mathf.Pow((influenceZone-distance),2)*(Mathf.Exp(-Mathf.Pow((disturbance-4)/3, 2)))*Random.Range(0.2f, 8.0f);
