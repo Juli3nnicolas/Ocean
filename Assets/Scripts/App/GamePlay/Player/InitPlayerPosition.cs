@@ -5,9 +5,11 @@ namespace App
 {
 	namespace Gameplay
 	{
-		public class InitPlayerPosition : MonoBehaviour {
-		
+		public class InitPlayerPosition : MonoBehaviour
+		{
 			public GameObject p_Camera;
+			
+			public Quaternion getInitialOrientation() { return m_initialOrientation; }
 		
 			// Use this for initialization
 			void Start () 
@@ -24,7 +26,7 @@ namespace App
 				p_Camera.transform.position = transform.position + camera_init_offset;
 				
 				// Init Camera rotation
-				p_Camera.transform.Rotate( new Vector3(-90.0f, 0.0f, 0.0f) );
+				p_Camera.transform.rotation = m_initialOrientation;
 			}
 			
 			// Update is called once per frame
@@ -32,6 +34,9 @@ namespace App
 			{
 			
 			}
+			
+			// Attributes
+			private Quaternion m_initialOrientation = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
 		}
 	}
 }
