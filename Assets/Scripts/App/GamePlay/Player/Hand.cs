@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Hand : MonoBehaviour {
 
+	
+	public delegate void StartScene();
+	public static event StartScene OnStart;
 
 
 	// Use this for initialization
@@ -32,7 +35,8 @@ public class Hand : MonoBehaviour {
 			if(other.name == "FirstLight")
 			{
 				Destroy(other.gameObject);
-				transform.parent.gameObject.GetComponent<App.Gameplay.MovePlayer>().init(); //! Must be moved somewhere else
+				OnStart();//Start scene 1
+				//transform.parent.gameObject.GetComponent<App.Gameplay.MovePlayer>().init(); //! Must be moved somewhere else
 			}
 		}
 	}

@@ -6,6 +6,7 @@ namespace App
 {
 	namespace Gameplay
 	{
+
 		public class MovePlayer : MonoBehaviour, Playable 
 		{
 			/////////// P L A Y A B L E   I N T E R F A C E ///////////
