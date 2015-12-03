@@ -4,8 +4,6 @@ using System.Collections;
 public class Hand : MonoBehaviour {
 
 	
-	public delegate void StartScene();
-	public static event StartScene OnStart;
 
 
 	// Use this for initialization
@@ -28,16 +26,4 @@ public class Hand : MonoBehaviour {
 		this.transform.Translate (move, Space.World);
 	}
 
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.tag == "removable")
-		{
-			if(other.name == "FirstLight")
-			{
-				Destroy(other.gameObject);
-				OnStart();//Start scene 1
-				//transform.parent.gameObject.GetComponent<App.Gameplay.MovePlayer>().init(); //! Must be moved somewhere else
-			}
-		}
-	}
 }

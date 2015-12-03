@@ -5,12 +5,16 @@ public class Scene1 : MonoBehaviour {
 
 
 	private GameObject player;
+    private GameObject firstLight;
+    private bool started;
 	
 	// Use this for initialization
 	void Start () {
 
 		player= GameObject.Find ("Player");
-		Hand.OnStart += Init;
+        firstLight = GameObject.Find("FirstLight");
+        InputManager.OnMove += Init;
+        started = false;
 
 	}
 	
@@ -26,6 +30,7 @@ public class Scene1 : MonoBehaviour {
 	{
 		StartMusic ();
 		StartPlayerMovement ();
+        InputManager.OnMove -= Init;
 	}
 
 	void StartMusic()
@@ -35,7 +40,16 @@ public class Scene1 : MonoBehaviour {
 	
 	void StartPlayerMovement()
 	{
-		player.GetComponent<App.Gameplay.MovePlayer> ().init ();
+        if (!started)
+        {
+            started = true;
+            player.GetComponent<App.Gameplay.MovePlayer>().init();
+            firstLight.GetComponent<Animator>().enabled = false;
+            firstLight.GetComponent<Light>().range = 0.5f;
+            firstLight.GetComponent<FirstLight>().objectToGuide = player;
+            firstLight.GetComponent<FirstLight>().distanceToReach = new Vector3(0.0f, 10.0f, 0.0f);
+            firstLight.GetComponent<FirstLight>().guide = true;
+        }
 	}
 
 

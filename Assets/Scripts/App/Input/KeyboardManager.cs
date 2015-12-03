@@ -44,6 +44,7 @@ public class KeyboardManager : MonoBehaviour {
 		{  
 			right+=(Vector3.back*coef);
 		}
-		InputManager.Instance.MakeMove (right, left);
+        if(right != Vector3.zero || left !=Vector3.zero)
+		    InputManager.Instance.MakeMove (right, left);
 	}  
 }

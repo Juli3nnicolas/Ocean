@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour {
 		leftHandPosition = new Vector3(-2, 0, 1);
 		rightHandMovement = Vector3.zero;
 		leftHandMovement = Vector3.zero;
-		OnMove ();
+		//OnMove ();
 
 	
 	}
