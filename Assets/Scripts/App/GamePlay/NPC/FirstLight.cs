@@ -10,10 +10,12 @@ public class FirstLight : MonoBehaviour {
     private const float speed = 0.03f;
     private float initialInsensity;
     private const float maxIntensity = 8.0f;
+    public delegate void DisturbAction();
+    public static event DisturbAction OnDisturb;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         guide = false;
         distanceToObject = Vector3.zero;
         initialInsensity = GetComponent<Light>().intensity;
@@ -53,5 +55,12 @@ public class FirstLight : MonoBehaviour {
     {
         GetComponent<Light>().intensity = maxIntensity - ((distanceToReach.y - distanceToObject.y) / distanceToReach.y) * (maxIntensity - initialInsensity);
 
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "hand")
+        {
+            OnDisturb();
+        }
     }
 }

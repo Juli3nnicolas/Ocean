@@ -43,8 +43,32 @@ public class KeyboardManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.E))  
 		{  
 			right+=(Vector3.back*coef);
-		}
-        if(right != Vector3.zero || left !=Vector3.zero)
-		    InputManager.Instance.MakeMove (right, left);
+        }
+        if (Input.GetKey(KeyCode.K))
+        {
+            left += (Vector3.right * coef);
+        }
+        if (Input.GetKey(KeyCode.M))
+        {
+            left += (Vector3.left * coef);
+        }
+        if (Input.GetKey(KeyCode.O))
+        {
+            left += (Vector3.up * coef);
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            left += (Vector3.down * coef);
+        }
+        if (Input.GetKey(KeyCode.I))
+        {
+            left += (Vector3.forward * coef);
+        }
+        if (Input.GetKey(KeyCode.P))
+        {
+            left += (Vector3.back * coef);
+        }
+        if (right != Vector3.zero || left !=Vector3.zero)
+		    InputManager.Instance.MakeMoveHand (right, left);
 	}  
 }

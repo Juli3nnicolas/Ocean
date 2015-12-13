@@ -12,9 +12,9 @@ public class IndividualPlancton : MonoBehaviour {
 
 	}
 
-	public void Move ()
+	public void Move (float movementAmplitude)
 	{
-		float movementAmplitude = InputManager.Instance.GetRightHandMovement ().x + InputManager.Instance.GetRightHandMovement ().y + InputManager.Instance.GetRightHandMovement ().z;
+		
 		Vector3 movement = new Vector3 (Random.Range (0.01f, movementAmplitude), Random.Range (0.01f, movementAmplitude), Random.Range (0.01f, movementAmplitude)) * movementSize;
 		transform.localPosition = transform.localPosition + movement;
 	}

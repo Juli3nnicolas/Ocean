@@ -13,7 +13,7 @@ public class Scene1 : MonoBehaviour {
 
 		player= GameObject.Find ("Player");
         firstLight = GameObject.Find("FirstLight");
-        InputManager.OnMove += Init;
+        FirstLight.OnDisturb += Init;
         started = false;
 
 	}
@@ -30,7 +30,7 @@ public class Scene1 : MonoBehaviour {
 	{
 		StartMusic ();
 		StartPlayerMovement ();
-        InputManager.OnMove -= Init;
+        FirstLight.OnDisturb += Init;
 	}
 
 	void StartMusic()

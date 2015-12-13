@@ -8,12 +8,13 @@ public class InputManager : MonoBehaviour {
 	private Vector3 leftHandPosition;
 	private Vector3 rightHandMovement;
 	private Vector3 leftHandMovement;
+
+    public Hand rightHand;
+    public Hand leftHand;
 	public delegate void MoveAction();
 	public static event MoveAction OnMove;
 	private static InputManager instance;
-
-	private bool movementChange;
-
+    
 	public InputManager ()
 	{
 		instance = this;
@@ -26,60 +27,50 @@ public class InputManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rightHandPosition = new Vector3(-2,0 , -1);
-		leftHandPosition = new Vector3(-2, 0, 1);
-		rightHandMovement = Vector3.zero;
-		leftHandMovement = Vector3.zero;
-		//OnMove ();
+        rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
+        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
 
-	
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-	public void MakeMove(Vector3 rightMovement, Vector3 leftMovement)
+	public void MakeMoveHand(Vector3 rightMovement, Vector3 leftMovement)
 	{
-		movementChange=true;
-		if (rightMovement == rightHandMovement && leftMovement == leftHandMovement) {
-			movementChange = false;
-		}
-
+        
 		//Limit Hand moves
-		if (Mathf.Abs (rightHandPosition.x + rightMovement.x) > 3)
+		/*if (Mathf.Abs (rightHand.GetPosition().x + rightMovement.x) > 3)
 			rightMovement.x = 0;
-		if (Mathf.Abs (rightHandPosition.y + rightMovement.y) > 2)
+		if (Mathf.Abs (rightHand.GetPosition().y + rightMovement.y) > 2)
 			rightMovement.y = 0;
-		if (Mathf.Abs (rightHandPosition.z + rightMovement.z) > 2)
+		if (Mathf.Abs (rightHand.GetPosition().z + rightMovement.z) > 2)
 			rightMovement.z = 0;
+        if (Mathf.Abs(leftHand.GetPosition().x + leftMovement.x) > 3)
+            leftMovement.x = 0;
+        if (Mathf.Abs(leftHand.GetPosition().y + leftMovement.y) > 2)
+            leftMovement.y = 0;
+        if (Mathf.Abs(leftHand.GetPosition().z + leftMovement.z) > 2)
+            leftMovement.z = 0;*/
+        
+        rightHand.SetPosition(rightHand.GetPosition()+rightMovement);
+        leftHand.SetPosition(leftHand.GetPosition() + leftMovement);
 
-
-		rightHandMovement = rightMovement;
-		rightHandPosition += rightMovement;
-
-
-		leftHandMovement = leftMovement;
-		leftHandPosition += leftMovement;
-		OnMove ();
+        
+        OnMove();
 
 	}
+    public void ChangePositionHand(Vector3 rightPosition, Vector3 leftPosition)
+    {
+        rightHand.SetPosition(rightPosition);
+        leftHand.SetPosition(leftPosition);
+        OnMove();
 
-	public Vector3 GetRightHandPosition ()
-	{
-		return this.rightHandPosition;
-	}
+    }
 
-	public Vector3 GetRightHandMovement ()
-	{
-		return this.rightHandMovement;
-	}
-
-	public bool HasMovementChanged()
-	{
-		return movementChange;
-	}
+    
 	
 
 }
