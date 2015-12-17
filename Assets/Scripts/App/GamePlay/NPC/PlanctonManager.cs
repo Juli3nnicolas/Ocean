@@ -14,10 +14,10 @@ public class PlanctonManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        InputManager.OnMove += Move;
         rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
+        rightHand.OnHandMove += Move;
         leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
+        leftHand.OnHandMove += Move;
         disturbance = 0.0f;
     }
 
@@ -26,10 +26,8 @@ public class PlanctonManager : MonoBehaviour
     {
 
     }
-
-    void Move()
+    void Move(object hand, System.EventArgs args)
     {
-
         Vector3 movement = ComputeMoves(rightHand) + ComputeMoves(leftHand);
         transform.Translate(movement);
         float individualMoveSize = ComputeIndividualMoveSize(rightHand) + ComputeIndividualMoveSize(leftHand);

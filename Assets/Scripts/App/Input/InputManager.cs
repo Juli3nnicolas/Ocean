@@ -11,8 +11,6 @@ public class InputManager : MonoBehaviour {
 
     public Hand rightHand;
     public Hand leftHand;
-	public delegate void MoveAction();
-	public static event MoveAction OnMove;
 	private static InputManager instance;
     
 	public InputManager ()
@@ -57,16 +55,13 @@ public class InputManager : MonoBehaviour {
         
         rightHand.SetPosition(rightHand.GetPosition()+rightMovement);
         leftHand.SetPosition(leftHand.GetPosition() + leftMovement);
-
         
-        OnMove();
 
 	}
     public void ChangePositionHand(Vector3 rightPosition, Vector3 leftPosition)
     {
         rightHand.SetPosition(rightPosition);
         leftHand.SetPosition(leftPosition);
-        OnMove();
 
     }
 

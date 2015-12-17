@@ -7,6 +7,8 @@ public class Scene1 : MonoBehaviour {
 	private GameObject player;
     private GameObject firstLight;
     private bool started;
+    private int runningPlanctonCount;
+    public GameObject runningPlanctonPrefab;
 	
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,7 @@ public class Scene1 : MonoBehaviour {
 		player= GameObject.Find ("Player");
         firstLight = GameObject.Find("FirstLight");
         FirstLight.OnDisturb += Init;
+        runningPlanctonCount = 0;
         started = false;
 
 	}
@@ -21,8 +24,12 @@ public class Scene1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (player.transform.position.y > 100)
-			Application.Quit ();
+        if (player.transform.position.y > 5 && runningPlanctonCount < 1)
+        {
+           /* GameObject rP =  Instantiate(runningPlanctonPrefab);
+            rP.GetComponent<RunningPlanctonManager>().Init();
+            runningPlanctonCount++;*/
+        }
 		
 	}
 

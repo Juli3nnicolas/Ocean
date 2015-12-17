@@ -11,8 +11,9 @@ public class Hand : MonoBehaviour {
     private Vector3 previousSpeed;
     private Vector3 acceleration;
     private Vector3 previousAcceleration;
+    public event System.EventHandler OnHandMove;
 
-    
+
 
 
     // Use this for initialization
@@ -39,10 +40,18 @@ public class Hand : MonoBehaviour {
         speed = move / Time.deltaTime;
         acceleration = (speed - previousSpeed) / Time.deltaTime;
 
+        System.EventHandler handler = OnHandMove;
+        if (handler != null && (position != previousPosition || move != previousMove || speed != previousSpeed || acceleration != previousAcceleration))
+        {
+            OnHandMove(this, System.EventArgs.Empty);
+        }
+
         previousPosition = position;
         previousMove = move;
         previousSpeed = speed;
         previousAcceleration = acceleration;
+
+
 	}
 
 	public void SetPosition(Vector3 newPosition)
@@ -57,6 +66,14 @@ public class Hand : MonoBehaviour {
     public Vector3 GetMove()
     {
         return move;
+    }
+    public Vector3 GetSpeed()
+    {
+        return speed;
+    }
+    public Vector3 GetAcceleration()
+    {
+        return acceleration;
     }
     public bool HasSpeedChanged()
     {
