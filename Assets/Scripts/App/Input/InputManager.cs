@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour {
 
     public Hand rightHand;
     public Hand leftHand;
+	public Player player;
 	private static InputManager instance;
     
 	public InputManager ()
@@ -26,7 +27,7 @@ public class InputManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
-        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
+		leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
 
 
     }
