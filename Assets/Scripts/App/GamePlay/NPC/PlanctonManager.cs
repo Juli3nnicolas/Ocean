@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlanctonManager : MonoBehaviour
+public class PlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiable
 {
 
     public const int influenceZone = 10;
@@ -14,17 +14,26 @@ public class PlanctonManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
-        rightHand.OnHandMove += Move;
-        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
-        leftHand.OnHandMove += Move;
-        disturbance = 0.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void Init()
+    {
+
+        rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
+        rightHand.OnHandMove += Move;
+        leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
+        leftHand.OnHandMove += Move;
+        disturbance = 0.0f;
+    }
+    public void Terminate()
+    {
+        Destroy(this);
     }
     void Move(object hand, System.EventArgs args)
     {
@@ -41,7 +50,7 @@ public class PlanctonManager : MonoBehaviour
         }
 
     }
-    public void ChangeColor(Color newColor)
+    void ChangeColor(Color newColor)
     {
         foreach (IndividualPlancton p in this.GetComponentsInChildren<IndividualPlancton>())
         {
