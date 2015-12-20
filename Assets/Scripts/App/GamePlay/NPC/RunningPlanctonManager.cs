@@ -25,7 +25,7 @@ public class RunningPlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiabl
 
     void Start()
     {
-
+        Init();
     }
     // Update is called once per frame
     void Update()
@@ -81,7 +81,12 @@ public class RunningPlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiabl
     }
     public void Terminate()
     {
-        Destroy(this);
+
+        foreach (Hand hand in player.GetComponentsInChildren<Hand>())
+        {
+            hand.OnHandMove -= Perturb;
+        }
+        Destroy(this.gameObject);
     }
     /**
     * Determine wether plancton should be perturbed by mouvement or not
@@ -89,7 +94,13 @@ public class RunningPlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiabl
     void Perturb(object sender, System.EventArgs args)
     {
         Hand hand = (Hand)sender;
-        if (Vector3.Distance(transform.position, hand.transform.position) < disturbanceDistance)
+        float distancetoIndividuals=0.0f;
+        foreach (IndividualRunningPlancton p in childs)
+        {
+            if (Vector3.Distance(p.transform.position, hand.transform.position) > distancetoIndividuals)
+                distancetoIndividuals = Vector3.Distance(p.transform.position, hand.transform.position);
+        }
+        if (distancetoIndividuals < disturbanceDistance)
         {
             float move = sumVector3(hand.GetMove());
             float speed = sumVector3(hand.GetSpeed());

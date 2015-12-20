@@ -34,7 +34,7 @@ public class RunningCreature : MonoBehaviour, Core.StdInterfaces.Initiable
     }
     public void Terminate()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
     void SetDestination(float distance)
     {

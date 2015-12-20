@@ -26,15 +26,6 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
             SetLoupiotteInsist();
             anim.Play("Insist");
         }
-        else
-        {
-            if (state == 3.0f)
-            {
-                anim.RemoveClip("Run");
-                SetLoupiotteRun();
-                anim.Play("Run");
-            }
-        }
 	}
 
     public void Init()
@@ -46,14 +37,14 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         anim.Play("Approche");
         SetLoupiotteInsist();
         SetLoupiotteRun();
-        xReference = Random.Range(-2.0f, 2.0f);
-        zReference = Random.Range(-2.0f, 2.0f);
-        yReference = Random.Range(5.0f, 7.0f);
+        xReference = Random.Range(-1.0f, 1.0f);
+        zReference = Random.Range(-1.0f, 1.0f);
+        yReference = Random.Range(3.0f, 4.0f);
         GetComponent<Light>().color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
     }
     public void Terminate()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
     void SetLoupiotteAproach()
     {
@@ -90,7 +81,6 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
     }
     void SetLoupiotteInsist()
     {
-        //Remove previous
         AnimationClip clip = new AnimationClip();
         Keyframe[] xValues = new Keyframe[5];
         Keyframe[] yValues = new Keyframe[5];
@@ -98,14 +88,14 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         Keyframe[] stateValues = new Keyframe[5];
         for (int i = 0; i < 5; i++)
         {
-            xValues[i] = new Keyframe(i * 2.0f, (i > 0 && i< 4) ? Random.Range(-2.0f, 2.0f) : xReference);
-            zValues[i] = new Keyframe(i * 2.0f, (i > 0 && i< 4) ? Random.Range(-2.0f, 2.0f) : zReference);
+            xValues[i] = new Keyframe(i * 2.0f, (i > 0 && i< 4) ? Random.Range(-1.0f, 1.0f) : xReference);
+            zValues[i] = new Keyframe(i * 2.0f, (i > 0 && i< 4) ? Random.Range(-1.0f, 1.0f) : zReference);
             stateValues[i] = new Keyframe(i * 2.0f, i<4 ? 2.0f : 1.0f);
         }
 
         yValues[0] = new Keyframe(0.0f, yReference);
-        yValues[1] = new Keyframe(2.0f, yReference - 2.0f);
-        yValues[2] = new Keyframe(4.0f, yReference - 3.0f);
+        yValues[1] = new Keyframe(2.0f, yReference - 0.5f);
+        yValues[2] = new Keyframe(4.0f, yReference - 1.0f);
         yValues[3] = new Keyframe(6.0f, yReference + 2.0f);
         yValues[4] = new Keyframe(8.0f, yReference);
 
@@ -131,18 +121,19 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         Keyframe[] stateValues = new Keyframe[5];
 
         xValues[0] = new Keyframe(0.0f, transform.position.x);
-        xValues[1] = new Keyframe(1.0f, transform.position.x + disturbMove.normalized.x * 2.0f);
+        xValues[1] = new Keyframe(1.0f, transform.position.x + disturbMove.normalized.x * 4.0f);
         xValues[2] = new Keyframe(3.0f, xReference);
 
         zValues[0] = new Keyframe(0.0f, transform.position.z);
-        zValues[1] = new Keyframe(1.0f, transform.position.z + disturbMove.normalized.z *2.0f);
+        zValues[1] = new Keyframe(1.0f, transform.position.z + disturbMove.normalized.z *4.0f);
         zValues[2] = new Keyframe(3.0f, zReference);
 
         stateValues[0] = new Keyframe(0.0f, 4.0f);
-        stateValues[1] = new Keyframe(3.0f, 1.0f);
+        stateValues[1] = new Keyframe(3.0f, 4.0f);
+        stateValues[2] = new Keyframe(3.01f, 1.0f);
 
         yValues[0] = new Keyframe(0.0f, transform.position.y);
-        yValues[1] = new Keyframe(1.0f, transform.position.y + disturbMove.normalized.y * 2.0f);
+        yValues[1] = new Keyframe(1.0f, transform.position.y + disturbMove.normalized.y * 4.0f);
         yValues[2] = new Keyframe(3.0f, yReference);
 
         AnimationCurve xCurve = new AnimationCurve(xValues);
@@ -159,10 +150,14 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "hand")
+        if (other.tag == "hand" && state != 4.0f)
         {
-            state = 3.0f;
-            disturbMove = other.GetComponent<Hand>().GetMove();
+            disturbMove = other.GetComponent<Hand>().GetMove() != Vector3.zero ? other.GetComponent<Hand>().GetMove() : (transform.position - other.GetComponentInParent<Player>().transform.position);
+            if (disturbMove == Vector3.zero)
+                disturbMove = new Vector3(1.0f, 1.0f, 1.0f);
+            anim.RemoveClip("Run");
+            SetLoupiotteRun();
+            anim.Play("Run");
         }
     }
 

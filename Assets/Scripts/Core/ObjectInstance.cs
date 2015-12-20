@@ -6,12 +6,14 @@ public class ObjectInstance {
     GameObject objectType;
     Vector3 position;
     float step;
+    float destroyStep;
 
-    public ObjectInstance(GameObject t, Vector3 p, float s)
+    public ObjectInstance(GameObject t, Vector3 p, float s, float dS)
     {
         objectType = t;
         position = p;
         step = s;
+        destroyStep = dS;
     }
     public float GetStep()
     {
@@ -24,6 +26,10 @@ public class ObjectInstance {
     public GameObject GetObjectType()
     {
         return objectType;
+    }
+    public float GetDestroyStep()
+    {
+        return destroyStep;
     }
 
 }

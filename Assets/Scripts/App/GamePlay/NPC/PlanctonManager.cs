@@ -33,7 +33,9 @@ public class PlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiable
     }
     public void Terminate()
     {
-        Destroy(this);
+        rightHand.OnHandMove -= Move;
+        leftHand.OnHandMove -= Move;
+        Destroy(this.gameObject);
     }
     void Move(object hand, System.EventArgs args)
     {

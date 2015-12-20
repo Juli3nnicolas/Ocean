@@ -10,12 +10,14 @@ public class Scene1 : MonoBehaviour {
 
     //Count to manage objects of first scene
     private System.Collections.Generic.Queue<ObjectInstance> objectsToPlace;
+    private System.Collections.Generic.Queue<ObjectDestroy> objectsToDestroy;
 
     //Prefabs
     public GameObject runningPlanctonPrefab;
     public GameObject planctonPrefab;
     public GameObject creaturePrefab;
     public GameObject loupiottePrefab;
+    public GameObject finalLightPrefab;
 	
 	// Use this for initialization
 	void Start () {
@@ -24,6 +26,7 @@ public class Scene1 : MonoBehaviour {
         firstLight = GameObject.Find("FirstLight");
         FirstLight.OnDisturb += Init;
         InitObjectsToPlace();
+        objectsToDestroy = new System.Collections.Generic.Queue<ObjectDestroy>();
         started = false;
 
 	}
@@ -33,6 +36,7 @@ public class Scene1 : MonoBehaviour {
 
 
         Place();
+        
 		
 	}
     void Place()
@@ -41,9 +45,17 @@ public class Scene1 : MonoBehaviour {
         {
             ObjectInstance instanceToCreate = objectsToPlace.Dequeue();
             GameObject newObject = (GameObject) Instantiate(instanceToCreate.GetObjectType(), instanceToCreate.GetPosition(), Quaternion.identity);
+            objectsToDestroy.Enqueue(new ObjectDestroy(newObject, instanceToCreate.GetDestroyStep()));
             newObject.GetComponent<Core.StdInterfaces.Initiable>().Init();
 
         }
+        while (objectsToDestroy.Count > 0 && player.transform.position.y >= objectsToDestroy.Peek().GetStep())
+        {
+            ObjectDestroy toDestroy =  objectsToDestroy.Dequeue();
+            toDestroy.GetObject().GetComponent<Core.StdInterfaces.Initiable>().Terminate();
+        }
+        if (player.transform.position.y >= 99.5f)
+            Application.LoadLevel("Scene2");
 
     }
     void InitObjectsToPlace()
@@ -51,11 +63,30 @@ public class Scene1 : MonoBehaviour {
         objectsToPlace = new System.Collections.Generic.Queue<ObjectInstance>();
 
         //We had instances of the objects we want to instantiate ordered by the height they must appear
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(5.0f, 20.0f, 2.0f), 0.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(-3.0f, 25.0f, 0.0f), 0.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 30.0f, 1.0f), 0.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 30.0f, 0.0f), 0.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(runningPlanctonPrefab, new Vector3(5.0f, 100.0f, 15.0f), 50.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(5.0f, 20.0f, 2.0f), 0.0f, 50.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(3.0f, 22.0f, 1.0f), 0.0f, 50.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(-4.0f, 23.0f, 3.2f), 0.0f, 50.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(-3.0f, 25.0f, 0.0f), 0.0f, 55.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 30.0f, 1.0f), 0.0f, 60.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 30.0f, 0.0f), 0.0f, 60.0f));
+
+        for (float i = -3.0f; i <= 3.0f; i++)
+        {
+            for (float n = -3.0f; n <= 3.0f; n++)
+            {
+                objectsToPlace.Enqueue(new ObjectInstance(creaturePrefab, new Vector3(i*2, 40.0f, n*2), 0.0f, 60.0f));
+            }
+        }
+
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 45.0f, 1.0f), 0.0f, 80.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(2.5f, 45.0f, 0.0f), 0.0f, 80.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.5f, 50.0f, 1.0f), 0.0f, 80.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 50.0f, 3.0f), 0.0f, 80.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(runningPlanctonPrefab, new Vector3(5.0f, 100.0f, 15.0f), 40.0f, 150.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 1.0f), 20.0f, 60.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 0.0f), 20.0f, 60.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(loupiottePrefab, new Vector3(5.0f, 60.0f, 15.0f), 50.0f, 150.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(finalLightPrefab, new Vector3(0.0f, 200.0f, 0.0f), 95.0f, 150.0f));
 
     }
     void PlaceRunningPlancton(float position, int count)
