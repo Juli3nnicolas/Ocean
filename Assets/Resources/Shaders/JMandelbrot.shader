@@ -53,7 +53,7 @@
 			float2 res = float2(800,600);
 			
 			// Center the complex plane at initialization time
-		    const float2 c = float2(fragCoord/res); c.x += -1.5; c.y += -0.75;
+		    float2 c = float2(fragCoord/res); c.x += -1.5; c.y += -0.75;
 		   	
 		   	// Initializing the series
 		   	float2 z = float2(0,0);
