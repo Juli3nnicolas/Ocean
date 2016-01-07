@@ -39,7 +39,7 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         SetLoupiotteRun();
         xReference = Random.Range(-1.0f, 1.0f);
         zReference = Random.Range(-1.0f, 1.0f);
-        yReference = Random.Range(3.0f, 4.0f);
+		yReference = 3.0f;
         GetComponent<Light>().color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
     }
     public void Terminate()
