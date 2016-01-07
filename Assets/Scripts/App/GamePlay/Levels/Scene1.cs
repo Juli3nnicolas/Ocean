@@ -86,7 +86,7 @@ public class Scene1 : MonoBehaviour {
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 1.0f), 20.0f, 60.0f));
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 0.0f), 20.0f, 60.0f));
         objectsToPlace.Enqueue(new ObjectInstance(loupiottePrefab, new Vector3(5.0f, 60.0f, 15.0f), 50.0f, 150.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(finalLightPrefab, new Vector3(0.0f, 200.0f, 0.0f), 95.0f, 150.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(finalLightPrefab, new Vector3(0.0f, 200.0f, 0.0f), 94.0f, 150.0f));
 
     }
     void PlaceRunningPlancton(float position, int count)

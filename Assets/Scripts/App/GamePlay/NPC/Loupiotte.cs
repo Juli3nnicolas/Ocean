@@ -70,11 +70,11 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         AnimationCurve yCurve = new AnimationCurve(yValues);
         AnimationCurve zCurve = new AnimationCurve(zValues);
         AnimationCurve stateCurve = new AnimationCurve(stateValues);
+        clip.legacy = true;
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.x", xCurve);
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.y", yCurve);
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.z", zCurve);
         clip.SetCurve("", typeof(Loupiotte), "state", stateCurve);
-        clip.legacy = true;
 
         anim.AddClip(clip, "Approche");
 
@@ -103,11 +103,11 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         AnimationCurve yCurve = new AnimationCurve(yValues);
         AnimationCurve zCurve = new AnimationCurve(zValues);
         AnimationCurve stateCurve = new AnimationCurve(stateValues);
+        clip.legacy = true;
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.x", xCurve);
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.y", yCurve);
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.z", zCurve);
         clip.SetCurve("", typeof(Loupiotte), "state", stateCurve);
-        clip.legacy = true;
 
         anim.AddClip(clip, "Insist");
     }
@@ -140,11 +140,11 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         AnimationCurve yCurve = new AnimationCurve(yValues);
         AnimationCurve zCurve = new AnimationCurve(zValues);
         AnimationCurve stateCurve = new AnimationCurve(stateValues);
+        clip.legacy = true;
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.x", xCurve);
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.y", yCurve);
         clip.SetCurve("", typeof(Loupiotte), "positionToPlayer.z", zCurve);
         clip.SetCurve("", typeof(Loupiotte), "state", stateCurve);
-        clip.legacy = true;
 
         anim.AddClip(clip, "Run");
     }
