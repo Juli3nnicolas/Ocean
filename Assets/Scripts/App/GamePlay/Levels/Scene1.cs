@@ -81,12 +81,23 @@ public class Scene1 : MonoBehaviour {
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 45.0f, 1.0f), 0.0f, 80.0f));
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(2.5f, 45.0f, 0.0f), 0.0f, 80.0f));
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.5f, 50.0f, 1.0f), 0.0f, 80.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 50.0f, 3.0f), 0.0f, 80.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(runningPlanctonPrefab, new Vector3(5.0f, 100.0f, 15.0f), 40.0f, 150.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 1.0f), 20.0f, 60.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 0.0f), 20.0f, 60.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(loupiottePrefab, new Vector3(5.0f, 60.0f, 15.0f), 50.0f, 150.0f));
-        objectsToPlace.Enqueue(new ObjectInstance(finalLightPrefab, new Vector3(0.0f, 200.0f, 0.0f), 94.0f, 150.0f));
+		objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 50.0f, 3.0f), 0.0f, 80.0f));
+		objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 1.0f), 20.0f, 70.0f));
+		objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 60.0f, 0.0f), 20.0f, 70.0f)); 
+		for (float i = -3.0f; i <= 3.0f; i++)
+		{
+			for (float n = -3.0f; n <= 3.0f; n++)
+			{
+				objectsToPlace.Enqueue(new ObjectInstance(creaturePrefab, new Vector3(i*2, 40.0f, n*2), 0.0f, 60.0f));
+			}
+		}
+		objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 80.0f, 0.0f), 40.0f, 100.0f)); 
+		objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 90.0f, 0.0f), 40.0f, 100.0f)); 
+        objectsToPlace.Enqueue(new ObjectInstance(runningPlanctonPrefab, new Vector3(5.0f, 100.0f, 15.0f), 55.0f, 150.0f));
+		objectsToPlace.Enqueue(new ObjectInstance(loupiottePrefab, new Vector3(5.0f, 75.0f, 15.0f), 65.0f, 150.0f));
+		objectsToPlace.Enqueue(new ObjectInstance(runningPlanctonPrefab, new Vector3(0.0f, 100.0f, 0.0f), 70.0f, 150.0f));
+		objectsToPlace.Enqueue(new ObjectInstance(loupiottePrefab, new Vector3(5.0f, 85.0f, 15.0f), 75.0f, 150.0f));
+        objectsToPlace.Enqueue(new ObjectInstance(finalLightPrefab, new Vector3(0.0f, 200.0f, 0.0f), 94.5f, 150.0f));
 
     }
     void PlaceRunningPlancton(float position, int count)
