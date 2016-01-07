@@ -46,24 +46,40 @@
 		    		return float4(count,0,count*dist/9,1);
 		    }
 		}
+
+		float2 collapsePixels(float2 px, float2 target)
+		{
+			// The following value is an interesting target
+			//float2 target = float2(-3.0/4.0, 0.25);
+			
+			px += abs(sin(0.5*_Time.y)) * normalize(-target + px);
+
+			return px;
+		}
+
+		
 		
 		float4 frag( float4 fragCoord: WPOS ): COLOR
 		{
-			// Plane's resolution
-			float2 res = float2(800,600);
+			// Frame settings
+			//float2 target = float2(-3.0 / 4.0, 0.25);
+			//float2 target = float2(-0.04524074130409, 0.9868162207157852);
+			float2 target = float2(0.281717921930775, 0.5771052841488505);
+			float h       = 0.0000000000000001;
+			float xl      = target.x-h, xr = target.x+h, yb = target.y-h, yt = target.y+h;
+			float y_intercept = 2000;//200;
+			float zoom = y_intercept + 400*pow(_Time.y,2);
 			
 			// Center the complex plane at initialization time
-		    float2 c = float2(fragCoord/res); c.x += -1.5; c.y += -0.75;
-		   	
+			float2 c = fragCoord / zoom;
+			c.x += xl; c.y += yb;
+
 		   	// Initializing the series
 		   	float2 z = float2(0,0);
 		   	
-		   	// Moving the camera
-		   	c *= 8;// - 8*cos(_Time.y);
-		   	
 		    // Check if the fragment pertain to the Mandelbrot set
 		    int count = 0;
-		    const int ITER = 256;
+			const int ITER = 4196;// 16000;
 		    while ( cpxSquareMod(z) <= 4 && count < ITER ) // While |z| <= 2, the pixel is assumed to be part of the Mandelbrot set
 		    {
 		    	z = squareCpx(z) + c;
