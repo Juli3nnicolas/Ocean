@@ -3,7 +3,11 @@ using System.Collections;
 
 public class IndividualRunningPlancton : MonoBehaviour, Core.StdInterfaces.Initiable
 {
-
+	/**
+	 * Planctons have three states : nomal (they don't move),
+	 * running (they run away without carring of the group)
+	 * and grouping (they return to their initial position in the group)
+	 */
 
     public enum states { Normal, Running, Grouping };
 
@@ -20,8 +24,10 @@ public class IndividualRunningPlancton : MonoBehaviour, Core.StdInterfaces.Initi
 	
 	// Update is called once per frame
 	void Update () {
+		//If he is running
         if (state == states.Running)
             RunAwayMove();
+		//If he is grouping
         else
         {
             if(state == states.Grouping)
@@ -41,9 +47,9 @@ public class IndividualRunningPlancton : MonoBehaviour, Core.StdInterfaces.Initi
     {
         Destroy(this);
     }
+	//Something has disturbed the plancton, we tell him to run and set the origin of the disturbance
     public void SetDisturbance(Vector3 disturbPoint)
     {
-        //disturbance = dist;
         disturbingPoint = disturbPoint;
         state = states.Running;
     }
@@ -52,40 +58,23 @@ public class IndividualRunningPlancton : MonoBehaviour, Core.StdInterfaces.Initi
         initialPosition = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         state = states.Grouping;
     }
-
+	/*
+	 * The normal move : if the plancton is not in his initial place relative to the group
+	 * he try to reach it
+	 */
      void NormalMove()
     {
         transform.localPosition = GetPositionToCenter();
+		//If he has reached his initial position, he turn his state to normal
         if (transform.localPosition == initialPosition)
         {
             state = states.Normal;
-            //disturbance = 0.0f;
         }
-        //Debug.Log(this.name + "Normal Move" + transform.localPosition);
     }
     void RunAwayMove()
     {
         transform.Translate(GetTranslateMove(), Space.World);
-        /*Vector3 safe = GetDestinationToRun();
-        transform.position = transform.position +  safe * 0.01f;
-        if (IsSafe(safe))
-            state = states.Grouping;
-*/
-        //Debug.Log(this.name + "Run Move" + transform.localPosition);
-
     }
-    /*bool IsSafe(Vector3 safePosition)
-    {
-        
-        
-        Vector3 distanceSafe = disturbingPoint - safePosition;
-        Vector3 distanceSelf = disturbingPoint - transform.position;
-        if (Mathf.Abs(distanceSafe.x) <= Mathf.Abs(distanceSelf.x) && Mathf.Abs(distanceSafe.y) <= Mathf.Abs(distanceSelf.y)  && Mathf.Abs(distanceSafe.z) <= Mathf.Abs(distanceSelf.z))
-        {
-            return true;
-        }
-        return false;
-    }*/
     Vector3 GetTranslateMove()
     {
         Vector3 move;
@@ -94,14 +83,6 @@ public class IndividualRunningPlancton : MonoBehaviour, Core.StdInterfaces.Initi
         move = move.normalized*speed;
         return move;
     }
-    /*Vector3 GetDestinationToRun()
-    {
-        Vector3 runAway;
-        runAway.x = ComputeDestinationCoordinates(disturbingPoint.x, transform.position.x);
-        runAway.y = ComputeDestinationCoordinates(disturbingPoint.y, transform.position.y);
-        runAway.z = ComputeDestinationCoordinates(disturbingPoint.z, transform.position.z);
-        return runAway;
-    }*/
     Vector3 GetPositionToCenter()
     {
         Vector3 positionToCenter;
@@ -120,17 +101,11 @@ public class IndividualRunningPlancton : MonoBehaviour, Core.StdInterfaces.Initi
         }
         return origin + Mathf.Min(-speed, (target - origin) * speed);
     }
+
     public bool IsInPlace()
     {
         if (state == states.Normal)
             return true;
         return false;
     }
-    /*float ComputeDestinationCoordinates(float pointToFlee, float position)
-    {
-
-        if (pointToFlee > position)
-            return pointToFlee - disturbance;
-        return pointToFlee + disturbance;
-    }*/
 }

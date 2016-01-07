@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/** This class is the generic Input Manager
+ * All input managers specific to one harware use it
+ */
 
 public class InputManager : MonoBehaviour {
 
@@ -36,29 +39,19 @@ public class InputManager : MonoBehaviour {
 	void Update () {
 	
 	}
-
+	/*
+	 * Make the hands move
+	 */
 	public void MakeMoveHand(Vector3 rightMovement, Vector3 leftMovement)
-	{
-        
-		//Limit Hand moves
-		/*if (Mathf.Abs (rightHand.GetPosition().x + rightMovement.x) > 3)
-			rightMovement.x = 0;
-		if (Mathf.Abs (rightHand.GetPosition().y + rightMovement.y) > 2)
-			rightMovement.y = 0;
-		if (Mathf.Abs (rightHand.GetPosition().z + rightMovement.z) > 2)
-			rightMovement.z = 0;
-        if (Mathf.Abs(leftHand.GetPosition().x + leftMovement.x) > 3)
-            leftMovement.x = 0;
-        if (Mathf.Abs(leftHand.GetPosition().y + leftMovement.y) > 2)
-            leftMovement.y = 0;
-        if (Mathf.Abs(leftHand.GetPosition().z + leftMovement.z) > 2)
-            leftMovement.z = 0;*/
-        
+	{   
         rightHand.SetPosition(rightHand.GetPosition()+rightMovement);
         leftHand.SetPosition(leftHand.GetPosition() + leftMovement);
         
 
 	}
+	/*
+	 * Set the hand position
+	 */
     public void ChangePositionHand(Vector3 rightPosition, Vector3 leftPosition)
     {
         rightHand.SetPosition(rightPosition);

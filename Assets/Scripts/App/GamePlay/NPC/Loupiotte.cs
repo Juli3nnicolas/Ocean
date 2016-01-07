@@ -3,6 +3,12 @@ using System.Collections;
 
 public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
 
+
+	/* Loupitte use animations to move
+	 * Meanning we dynamicaly set animation clips
+	 */
+	//The vector used by the animation it determines the position of loupiotte
+	//Relative to the player
     public Vector3 positionToPlayer;
     Player player;
     Animation anim;
@@ -20,6 +26,7 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
 	// Update is called once per frame
 	void Update () {
         transform.position = player.transform.position + positionToPlayer;
+		//If an animation has end we play Insist animation 
         if (state == 1.0f)
         {
             anim.RemoveClip("Insist");
@@ -34,6 +41,7 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
         anim = GetComponent<Animation>();
         SetLoupiotteAproach();
         state = 0.0f;
+		//First we play approach animations
         anim.Play("Approche");
         SetLoupiotteInsist();
         SetLoupiotteRun();
@@ -113,7 +121,6 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
     }
     void SetLoupiotteRun()
     {
-        //Remove previous
         AnimationClip clip = new AnimationClip();
         Keyframe[] xValues = new Keyframe[5];
         Keyframe[] yValues = new Keyframe[5];
@@ -148,6 +155,7 @@ public class Loupiotte : MonoBehaviour, Core.StdInterfaces.Initiable {
 
         anim.AddClip(clip, "Run");
     }
+	//If the player disturb Loupitte, we play set and play animation run away
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "hand" && state != 4.0f)

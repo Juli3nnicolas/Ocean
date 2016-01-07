@@ -18,7 +18,7 @@ public class OptiTrackManager : MonoBehaviour {
         player = GameObject.Find("Player").GetComponent<Player>();
     }
 	
-	// Update is called once per frame
+	// At each update we set the hands positions (relative to the player's position) at the same value as tracked objects
 	void Update () {
 
         

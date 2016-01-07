@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Scene1FinalLight : MonoBehaviour, Core.StdInterfaces.Initiable
 {
-
+	/*
+	 * The final Light : it go straight to the player's camera
+	 */
     public Vector3 positionToPlayer;
     Player player;
     Animation anim;

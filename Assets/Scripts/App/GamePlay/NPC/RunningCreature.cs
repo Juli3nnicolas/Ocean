@@ -3,7 +3,9 @@ using System.Collections;
 
 public class RunningCreature : MonoBehaviour, Core.StdInterfaces.Initiable
 {
-
+	/*
+	 * A creature that flee whe the player approach
+	 */
     private GameObject player;
     private float distanceToRun;
     private Vector3 pointToReach;
@@ -13,17 +15,7 @@ public class RunningCreature : MonoBehaviour, Core.StdInterfaces.Initiable
 	void Start () {
     }
 	
-	// Update is called once per frame
-	void Update () {
 
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance < distanceToRun)
-        {
-            if(pointToReach == transform.position)
-                SetDestination(distance);
-            Move(distance);
-        }
-	}
     public void Init()
     {
 
@@ -31,7 +23,18 @@ public class RunningCreature : MonoBehaviour, Core.StdInterfaces.Initiable
         pointToReach = transform.position;
         speed = Random.Range(0.001f, 0.05f);
         distanceToRun = Random.Range(10.0f, 15.0f);
-    }
+	}
+	// If the player is close, we compute where to run
+	void Update () {
+
+		float distance = Vector3.Distance(player.transform.position, transform.position);
+		if (distance < distanceToRun)
+		{
+			if(pointToReach == transform.position)
+				SetDestination(distance);
+			Move(distance);
+		}
+	}
     public void Terminate()
     {
         Destroy(this.gameObject);
@@ -48,6 +51,8 @@ public class RunningCreature : MonoBehaviour, Core.StdInterfaces.Initiable
                 pointToReach.z = transform.position.z +distanceToRun;
             
     }
+	//If the creature is oriented in the good direction to run, it moves
+	//Else it rotate
     void Move(float distance)
     {
         Vector3 targetDir =pointToReach - transform.position;

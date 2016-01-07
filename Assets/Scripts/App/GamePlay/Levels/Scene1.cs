@@ -25,6 +25,7 @@ public class Scene1 : MonoBehaviour {
 		player= GameObject.Find ("Player");
         firstLight = GameObject.Find("FirstLight");
         FirstLight.OnDisturb += Init;
+		//We enqueu all object that will be instantiated
         InitObjectsToPlace();
         objectsToDestroy = new System.Collections.Generic.Queue<ObjectDestroy>();
         started = false;
@@ -41,6 +42,8 @@ public class Scene1 : MonoBehaviour {
 	}
     void Place()
     {
+		//If the player has reached the height required by an object to be instatiated,
+		// The we instatiate it and we had it to the destroying queu
         while(objectsToPlace.Count > 0 &&  player.transform.position.y >= objectsToPlace.Peek().GetStep()) 
         {
             ObjectInstance instanceToCreate = objectsToPlace.Dequeue();
@@ -48,12 +51,14 @@ public class Scene1 : MonoBehaviour {
             objectsToDestroy.Enqueue(new ObjectDestroy(newObject, instanceToCreate.GetDestroyStep()));
             newObject.GetComponent<Core.StdInterfaces.Initiable>().Init();
 
-        }
+		}//If the player has reached the height required by an object to be terminated,
+		// The we terminate it
         while (objectsToDestroy.Count > 0 && player.transform.position.y >= objectsToDestroy.Peek().GetStep())
         {
             ObjectDestroy toDestroy =  objectsToDestroy.Dequeue();
             toDestroy.GetObject().GetComponent<Core.StdInterfaces.Initiable>().Terminate();
         }
+		//The end of the scene, we load scene two
         if (player.transform.position.y >= 99.5f)
             Application.LoadLevel("Scene2");
 
@@ -63,6 +68,7 @@ public class Scene1 : MonoBehaviour {
         objectsToPlace = new System.Collections.Generic.Queue<ObjectInstance>();
 
         //We had instances of the objects we want to instantiate ordered by the height they must appear
+		//See ObjectInstance class for more precisions
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(5.0f, 20.0f, 2.0f), 0.0f, 50.0f));
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(3.0f, 22.0f, 1.0f), 0.0f, 50.0f));
         objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(-4.0f, 23.0f, 3.2f), 0.0f, 50.0f));
@@ -115,7 +121,9 @@ public class Scene1 : MonoBehaviour {
 	{
 		GetComponent<AudioSource>().Play();
 	}
-	
+
+	//This function is called when the player disturb the first loupiotte
+	//It initialize the game
 	void StartPlayerMovement()
 	{
         if (!started)

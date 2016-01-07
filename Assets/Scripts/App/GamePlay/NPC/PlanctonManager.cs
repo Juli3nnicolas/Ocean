@@ -3,7 +3,9 @@ using System.Collections;
 
 public class PlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiable
 {
-
+	/*
+	 * Manage a plancton group
+	 */
     public const int influenceZone = 10;
     private Hand rightHand;
     private Hand leftHand;
@@ -24,7 +26,7 @@ public class PlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiable
 
     public void Init()
     {
-
+		//Listen to the player's moves
         rightHand = GameObject.Find("RightHand").GetComponent<Hand>();
         rightHand.OnHandMove += Move;
         leftHand = GameObject.Find("LeftHand").GetComponent<Hand>();
@@ -39,9 +41,11 @@ public class PlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiable
     }
     void Move(object hand, System.EventArgs args)
     {
+		//In reaction to the player movements, we move
         Vector3 movement = ComputeMoves(rightHand) + ComputeMoves(leftHand);
         transform.Translate(movement);
         float individualMoveSize = ComputeIndividualMoveSize(rightHand) + ComputeIndividualMoveSize(leftHand);
+		//And the we tell individuals to move
         if (individualMoveSize > 0.0f)
         {
             foreach (IndividualPlancton p in this.GetComponentsInChildren<IndividualPlancton>())
@@ -52,6 +56,7 @@ public class PlanctonManager : MonoBehaviour, Core.StdInterfaces.Initiable
         }
 
     }
+	//The color of the bank change with the disturbance
     void ChangeColor(Color newColor)
     {
         foreach (IndividualPlancton p in this.GetComponentsInChildren<IndividualPlancton>())

@@ -3,10 +3,15 @@ using System.Collections;
 
 public class FirstLight : MonoBehaviour {
 
+	//The distance that separate the light from the player
     public Vector3 distanceToObject;
+	//The ideal distance between the lght and the player
     public Vector3 distanceToReach;
+	//Wether the light has started to guide the player or not
     public bool guide;
+	//The object to guide (here the player)
     public GameObject objectToGuide;
+
     private const float speed = 0.03f;
     private float initialInsensity;
     private const float maxIntensity = 8.0f;
@@ -24,6 +29,7 @@ public class FirstLight : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
         
+		//Once the light start to guide the player
         if(guide == true)
         {
             distanceToObject = transform.position - objectToGuide.transform.position;
@@ -41,6 +47,7 @@ public class FirstLight : MonoBehaviour {
         distanceToObject.y = ComputeCoordinates(distanceToObject.y, distanceToReach.y);
         distanceToObject.z = ComputeCoordinates(distanceToObject.x, distanceToReach.z);
     }
+	//To determine how the move at one update
     float ComputeCoordinates(float origin, float target)
     {
         if (Mathf.Abs(target - origin) <= speed)
@@ -51,6 +58,7 @@ public class FirstLight : MonoBehaviour {
 
         
     }
+	//The intensity change depends of the distance from object.
     void SetIntensity()
     {
         GetComponent<Light>().intensity = maxIntensity - ((distanceToReach.y - distanceToObject.y) / distanceToReach.y) * (maxIntensity - initialInsensity);
@@ -60,6 +68,7 @@ public class FirstLight : MonoBehaviour {
     {
         if(other.tag == "hand")
         {
+			//When the player hit the light, we fire an event to start the game
             OnDisturb();
         }
     }

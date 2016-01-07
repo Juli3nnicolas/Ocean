@@ -8,7 +8,6 @@ public class IndividualPlancton : MonoBehaviour {
 	void Start () {
 	
 		movementSize = Random.Range (1.0f, 3.0f);
-		//Values to change when real Input
 
 	}
 
