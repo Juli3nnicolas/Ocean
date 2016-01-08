@@ -76,12 +76,12 @@
 			return px;
 		}
 
-		float4 fadeOut(float4 pixColor)
+		float4 fadeOut(float4 pixColor, float startTime, float duration)
 		{
 			float4 color = pixColor;
-			float t = _Time.y - 66;
+			float t = _Time.y - startTime;
 
-			color *= ((-2 * t + 2) / 2);
+			color *= ((-duration * t + duration) / duration);
 
 			return color;
 		}
@@ -123,7 +123,7 @@
 			float final_color = setFragColor(cpxSquareMod(z), ITER, count);
 
 			if (_Time.y >= 66)
-				final_color = fadeOut(final_color);
+				final_color = fadeOut(final_color, 66, 2); // Effect's triggered at second 66 and lasts 2 seconds
 
 		    return final_color; 
 		}
