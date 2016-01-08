@@ -1,7 +1,7 @@
 ﻿Shader "Cg shader with all built-in vertex input parameters" {
 	Properties
 	{
-		_ColorRatio("Color tint modifier ratio", Vector) = (1,1,1,1)
+		_ColorRatio("Color tint modifier ratio", Vector) = (1.0,1.0,1.0,1.0)
 	}
 	SubShader
 	{
@@ -14,7 +14,7 @@
 		#pragma fragment frag 
 
 
-		uniform float3 _ColorRatio;
+		uniform float4 _ColorRatio;
 
         struct vertexOutput {
          	float4 pos: POSITION;
@@ -42,6 +42,8 @@
 
 		float4 setFragColor(float dist, float ITER, float count)
 		{
+			float3 color_ratio = _ColorRatio.xyz;
+			
 			// Set the fragments' color
 		    if ( dist <= 4 )
 		    	return float4(0,0,0,1);	// The fragment is part of the set
@@ -51,14 +53,14 @@
 		    	
 				if (dist <= 9)
 				{
-					float4 color = float4(count, count / 2, count, 1);
-					color.rgb *= _ColorRatio;
+					float4 color = float4(count, count, count, 1);
+					color.rgb *= color_ratio;
 					return color;
 				}
 				else
 				{
 					float4 color = float4(count, 0, count*dist / 9, 1);
-					color.rgb *= _ColorRatio;
+					color.rgb *= color_ratio;
 					return color;
 				}
 		    }
