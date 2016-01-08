@@ -89,6 +89,6 @@ public class Scene2 : MonoBehaviour {
     }
 
     private MaterialPropertyBlock m_propBlock;
-    private Vector3 m_colorRatio = new Vector3(1.0f, 1.0f, 1.0f);
+    private Vector3 m_colorRatio = new Vector3(252.0f/255.0f, 120.0f/255.0f, 220.0f/255.0f);
     private float M_COLOR_QTY = 0.01f;
 }
