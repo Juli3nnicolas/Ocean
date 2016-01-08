@@ -13,6 +13,8 @@ public class Scene2 : MonoBehaviour {
         m_propBlock = new MaterialPropertyBlock();
         m_propBlock.AddVector("_ColorRatio", new Vector4(1.0f,1.0f,1.0f,1.0f));
         Viewport.GetComponent<Renderer>().SetPropertyBlock(m_propBlock);
+
+        StartMusic();
 	}
 	
 	// Update is called once per frame
@@ -86,6 +88,11 @@ public class Scene2 : MonoBehaviour {
     {
         m_propBlock.SetVector("_ColorRatio", new Vector4(colorRatio.x, colorRatio.y, colorRatio.z, 1.0f));
         Viewport.GetComponent<Renderer>().SetPropertyBlock(m_propBlock);
+    }
+
+    private void StartMusic()
+    {
+        GetComponent<AudioSource>().Play();
     }
 
     private MaterialPropertyBlock m_propBlock;

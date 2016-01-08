@@ -85,7 +85,13 @@
 			float h       = 0.0000000000000001;
 			float xl      = target.x-h, xr = target.x+h, yb = target.y-h, yt = target.y+h;
 			float y_intercept = 2000;
-			float zoom = y_intercept + 400*pow(_Time.y,2);
+
+			// Manage scene's traveling speed
+			float zoom = 0.0;
+			if ( _Time.y <= 23.0 )
+				zoom = y_intercept + 400*pow(_Time.y, 1 + (_Time.y - 23.0) / 23.0);
+			else
+				zoom = y_intercept + 400 * pow(_Time.y, 2);
 			
 			// Convert pixels from pixel coordinates to complex coordinates
 			float2 c = fragCoord / zoom;
