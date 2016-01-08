@@ -94,7 +94,7 @@ public class Scene1 : MonoBehaviour {
 		{
 			for (float n = -3.0f; n <= 3.0f; n++)
 			{
-				objectsToPlace.Enqueue(new ObjectInstance(creaturePrefab, new Vector3(i*2, 40.0f, n*2), 0.0f, 60.0f));
+				objectsToPlace.Enqueue(new ObjectInstance(creaturePrefab, new Vector3(i*2, 80.0f, n*2), 20.0f, 100.0f));
 			}
 		}
 		objectsToPlace.Enqueue(new ObjectInstance(planctonPrefab, new Vector3(0.0f, 80.0f, 0.0f), 40.0f, 100.0f)); 
