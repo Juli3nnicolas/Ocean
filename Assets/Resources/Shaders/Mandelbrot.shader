@@ -59,7 +59,7 @@
 				}
 				else
 				{
-					float4 color = float4(count, 0, count*dist / 9, 1);
+					float4 color = float4(count*dist/9, count*dist/9, count*dist / 9, 1);
 					color.rgb *= color_ratio;
 					return color;
 				}
