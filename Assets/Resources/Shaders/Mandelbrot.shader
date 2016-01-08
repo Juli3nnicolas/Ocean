@@ -1,7 +1,7 @@
 ﻿Shader "Cg shader with all built-in vertex input parameters" {
 	Properties
 	{
-		_ColorRatio("Color tint modifier ratio", Vector) = (1.0,1.0,1.0,1.0)
+		_ColorRatio("Color tint modifier ratio", Vector) = (1.0,0.0,0.0,1.0)
 	}
 	SubShader
 	{
@@ -120,12 +120,10 @@
 		    }
 		   
 			// Compute final color
-			float final_color = setFragColor(cpxSquareMod(z), ITER, count);
-
-			if (_Time.y >= 66)
-				final_color = fadeOut(final_color, 66, 2); // Effect's triggered at second 66 and lasts 2 seconds
-
-		    return final_color; 
+			if (_Time.y < 66)
+				return setFragColor(cpxSquareMod(z), ITER, count);
+			else
+				return fadeOut(setFragColor(cpxSquareMod(z), ITER, count), 66, 2);
 		}
 
          ENDCG  
