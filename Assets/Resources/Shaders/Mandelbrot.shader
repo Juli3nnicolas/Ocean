@@ -76,6 +76,16 @@
 			return px;
 		}
 
+		float4 fadeOut(float4 pixColor)
+		{
+			float4 color = pixColor;
+			float t = _Time.y - 66;
+
+			color *= ((-2 * t + 2) / 2);
+
+			return color;
+		}
+
 		float4 frag( float4 fragCoord: WPOS ): COLOR
 		{
 			// Frame settings
@@ -109,7 +119,13 @@
 		    	count++;
 		    }
 		   
-		    return setFragColor( cpxSquareMod(z), ITER, count ); 
+			// Compute final color
+			float final_color = setFragColor(cpxSquareMod(z), ITER, count);
+
+			if (_Time.y >= 66)
+				final_color = fadeOut(final_color);
+
+		    return final_color; 
 		}
 
          ENDCG  
